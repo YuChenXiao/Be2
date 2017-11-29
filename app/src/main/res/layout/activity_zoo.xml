@@ -28,31 +28,50 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="207dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="88dp"
+        android:layout_width="297dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="68dp"
         android:layout_marginTop="60dp"
         android:text="動物認養資訊"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/appBarLayout" />
 
     <ListView
         android:id="@+id/listview"
-        android:layout_width="373dp"
-        android:layout_height="448dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="380dp"
+        android:layout_height="413dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="32dp"
+        android:layout_width="45dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/zo" />
+
+    <Spinner
+        android:id="@+id/spinner6"
+        android:layout_width="103dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/textView18"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:text="我想搜尋 :"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
 </android.support.constraint.ConstraintLayout>

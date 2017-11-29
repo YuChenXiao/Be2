@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "6346558748",
+    "firebase_url": "https://befirbase.firebaseio.com",
+    "project_id": "befirbase",
+    "storage_bucket": "befirbase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:6346558748:android:ab436708d8473eca",
+        "android_client_info": {
+          "package_name": "me.xiaouc.be"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "6346558748-kftt5ov94qmn8no6spn53e0f8mr07slj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.xiaouc.be",
+            "certificate_hash": "8e6dba465cbf4876532dedcf39bd2134c92cfc69"
+          }
+        },
+        {
+          "client_id": "6346558748-s2eln2ljk62ro920opaoj2t0qu95b97d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZDrpT7Z3bR0WtuNQujsVygKQtWL9mIMA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "6346558748-s2eln2ljk62ro920opaoj2t0qu95b97d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

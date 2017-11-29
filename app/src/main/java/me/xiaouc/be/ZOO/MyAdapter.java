@@ -57,26 +57,6 @@ class MyAdapter extends BaseAdapter {
         tv5.setText("電話 : "+zooInfo[position].Phone);
 
 
-
-
-//        TextView nametv = (TextView) v.findViewById(R.id.nametv);
-//        nametv.setText(zooInfo[position].Name);
-//        TextView agetv = (TextView) v.findViewById(R.id.agetv);
-//        agetv.setText(zooInfo[position].Age);
-//        TextView varietytv = (TextView) v.findViewById(R.id.varietytv2);
-//        varietytv.setText(zooInfo[position].Variety);
-//        TextView buildtv = (TextView) v.findViewById(R.id.buildtv);
-//        buildtv.setText(zooInfo[position].Build);
-//        TextView hairtypetv = (TextView) v.findViewById(R.id.hairtypetv);
-//        hairtypetv.setText(zooInfo[position].HairType);
-//        TextView typetv = (TextView) v.findViewById(R.id.typetv);
-//        typetv.setText(zooInfo[position].Type);
-//        TextView resettlementtv2 = (TextView) v.findViewById(R.id.resettlementtv2);
-//        resettlementtv2.setText(zooInfo[position].Resettlement);
-//        TextView phonetv = (TextView) v.findViewById(R.id.phonetv);
-//        phonetv.setText(zooInfo[position].Phone);
-//        EditText editText = (EditText) v.findViewById(R.id.editText);
-//        editText.setText(zooInfo[position].Note);
         return v;
         }
 }
