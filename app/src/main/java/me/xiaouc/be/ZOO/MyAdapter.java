@@ -91,26 +91,26 @@ class MyAdapter extends BaseAdapter implements Filterable {
                         orgzooInfo =new ArrayList<ZooInfo>(zooInfo);
                     }
                 }
-                if (charSequence != null && charSequence.toString().length()>0){
-                    Log.d("TAG","AAAAAAA");
+                if (!charSequence.equals("")){
                     List<ZooInfo> filteredItem =new ArrayList<ZooInfo>();
-                    List<ZooInfo> nofilteredItem =new ArrayList<ZooInfo>();
                     for (int i =0;i<orgzooInfo.size();i++){
                         String title =orgzooInfo.get(i).Type+orgzooInfo.get(i).Phone+orgzooInfo.get(i).Age+orgzooInfo.get(i).Name+orgzooInfo.get(i).Resettlement;
-
-
+                        Log.d("TAG","SIZE"+orgzooInfo.size());
                         if (title.contains(charSequence)){
-                            Log.d("Title",i+":"+title);
+                            Log.d("Title1",i+":"+title);
                             Log.d("charSequence",charSequence.toString());
                             filteredItem.add(orgzooInfo.get(i));
-
-                           }else {
-                            filteredItem.add(orgzooInfo.get(i));
-
-                    }
+                           Log.d("TAG", "SIZE"+orgzooInfo.size());
+                        }
+//                        else {
+//                            filteredItem.add(orgzooInfo.get(i));
+//                            Log.d("Title2","else "+filteredItem.get(i).Type);
+//
+//                        }
                     }
                     results.count=filteredItem.size();
                     results.values=filteredItem;
+                    Log.d("TAG","count"+filteredItem.size());
 
                 }else {
                     synchronized (this){
@@ -128,7 +128,7 @@ class MyAdapter extends BaseAdapter implements Filterable {
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             orgzooInfo=(ArrayList<ZooInfo>)filterResults.values;
-            for (int i =0 ;i<orgzooInfo.size();i++){
+            for (int i =0;i<orgzooInfo.size();i++){
                 if (filterResults.count>0){
                     notifyDataSetChanged();
                 }else {
