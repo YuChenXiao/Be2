@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,18 +42,7 @@ public class ZOO extends AppCompatActivity {
         searchView.setFocusable(false);
         setTitle("動物認養資訊");
         searchView.setQueryHint("輸入犬貓搜尋");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return true;
-            }
-        });
+        setSearch_funtion();
 
         //擷取api 用gson解析
         RequestQueue queue = Volley.newRequestQueue(ZOO.this);
@@ -107,6 +99,41 @@ AdapterView.OnItemClickListener listener =new AdapterView.OnItemClickListener() 
 
     }
 };
+    private void setSearch_funtion(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater =getMenuInflater();
+        inflater.inflate(R.menu.action,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action:
+                break;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
     //返回鍵
     public void clickBack(View v){
         Intent intent = new Intent();

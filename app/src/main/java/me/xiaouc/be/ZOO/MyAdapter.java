@@ -53,8 +53,8 @@ class MyAdapter extends BaseAdapter implements Filterable {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         ViewHolder holder;
-        LayoutInflater inflater =LayoutInflater.from(context);
-        view =inflater.inflate(R.layout.zooitem,viewGroup,false);
+        inflater =LayoutInflater.from(context);
+        view = inflater.inflate(R.layout.zooitem,viewGroup,false);
         holder =new ViewHolder();
         holder.Resettlement=(TextView) view.findViewById(R.id.textView4);
         holder.Phone=(TextView) view.findViewById(R.id.textView5);
@@ -83,61 +83,59 @@ class MyAdapter extends BaseAdapter implements Filterable {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
 
-                charSequence =charSequence.toString();
+                charSequence = charSequence.toString();
                 Log.d("TAG","FILTER"+charSequence);
-                FilterResults results =new FilterResults();
-                if (orgzooInfo == null){
-                    synchronized (this){
+                FilterResults result =new FilterResults();
+                orgzooInfo =new ArrayList<ZooInfo>(zooInfo);
+
+                if (orgzooInfo == null) {
+                    synchronized (this) {
                         orgzooInfo =new ArrayList<ZooInfo>(zooInfo);
                     }
                 }
-                if (!charSequence.equals("")){
-                    List<ZooInfo> filteredItem =new ArrayList<ZooInfo>();
-                    for (int i =0;i<orgzooInfo.size();i++){
-                        String title =orgzooInfo.get(i).Type+orgzooInfo.get(i).Phone+orgzooInfo.get(i).Age+orgzooInfo.get(i).Name+orgzooInfo.get(i).Resettlement;
-                        Log.d("TAG","SIZE"+orgzooInfo.size());
-                        if (title.contains(charSequence)){
-                            Log.d("Title1",i+":"+title);
+                if (charSequence != null&& charSequence.toString().length()>0) {
+                    List<ZooInfo> filteredItem = new ArrayList<ZooInfo>();
+                    for (int i =0;i<orgzooInfo.size();i++) {
+                        String title = orgzooInfo.get(i).Type+orgzooInfo.get(i).Phone+orgzooInfo.get(i).Age+orgzooInfo.get(i).Name+orgzooInfo.get(i).Resettlement;
+                        Log.d("TAG","org"+orgzooInfo.get(i).Type);
+                        if (title.contains(charSequence)) {
+
                             Log.d("charSequence",charSequence.toString());
                             filteredItem.add(orgzooInfo.get(i));
-                           Log.d("TAG", "SIZE"+orgzooInfo.size());
+                            Log.d("Title1",i+":"+title);
                         }
-//                        else {
-//                            filteredItem.add(orgzooInfo.get(i));
-//                            Log.d("Title2","else "+filteredItem.get(i).Type);
-//
-//                        }
                     }
-                    results.count=filteredItem.size();
-                    results.values=filteredItem;
-                    Log.d("TAG","count"+filteredItem.size());
+                    result.count=filteredItem.size();
+                    result.values=filteredItem;
 
                 }else {
+
                     synchronized (this){
                         Log.d("TAG","synchronized");
                         List<ZooInfo>list =new ArrayList<ZooInfo>(orgzooInfo);
-                        results.count=list.size()
-                        ;results.values=list;
+                        result.values=list;
+                        result.count=list.size();
                     }
                 }
-                Log.d("count",""+results.count);
-                Log.d("results",""+results.values.toString());
-                return results;
+                Log.d("count",""+result.count);
+                Log.d("results",""+result.values.toString());
+                return result;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            orgzooInfo=(ArrayList<ZooInfo>)filterResults.values;
-            for (int i =0;i<orgzooInfo.size();i++){
-                if (filterResults.count>0){
+            //
+               orgzooInfo = (ArrayList<ZooInfo>)filterResults.values;
+                for(int i=0;i<orgzooInfo.size();i++)
+                if(filterResults.count>0){
                     notifyDataSetChanged();
-                }else {
+                }   else{
                     notifyDataSetInvalidated();
                 }
             }
-            }
         };
-         return filter;
+        Log.d("TAG","搜尋成功");
+        return filter;
     }
     static class  ViewHolder{
         TextView Resettlement;
