@@ -26,9 +26,8 @@ import me.xiaouc.be.R;
  */
 class MyAdapter extends BaseAdapter implements Filterable {
     Context context;
-//    ZooInfo[] zooInfo;
     List<ZooInfo> zooInfo;
-    ArrayList<ZooInfo> orgzooInfo;
+    List<ZooInfo> orgzooInfo;
     LayoutInflater inflater;
     public MyAdapter(Context context,List<ZooInfo> zooInfo){
         this.context = context;
@@ -65,14 +64,14 @@ class MyAdapter extends BaseAdapter implements Filterable {
         holder.img =(ImageView)view.findViewById(R.id.imageView);
          Picasso.with(context).load(zooInfo.get(position).ImageName).into(holder.img);
         view.setTag(holder);
-        if (position!=0)
+        if (position!=0) {
             holder.Name.setText(zooInfo.get(position).Name);
-        holder.Resettlement.setText(zooInfo.get(position).Resettlement);
-        holder.Age.setText(zooInfo.get(position).Age);
-        holder.Type.setText(zooInfo.get(position).Type);
-        holder.Note.setText(zooInfo.get(position).Note);
-        holder.Phone.setText(zooInfo.get(position).Phone);
-
+            holder.Resettlement.setText(zooInfo.get(position).Resettlement);
+            holder.Age.setText(zooInfo.get(position).Age);
+            holder.Type.setText(zooInfo.get(position).Type);
+            holder.Note.setText(zooInfo.get(position).Note);
+            holder.Phone.setText(zooInfo.get(position).Phone);
+        }
 
         return view;
         }
@@ -97,19 +96,14 @@ class MyAdapter extends BaseAdapter implements Filterable {
                     List<ZooInfo> filteredItem = new ArrayList<ZooInfo>();
                     for (int i =0;i<orgzooInfo.size();i++) {
                         String title = orgzooInfo.get(i).Type+orgzooInfo.get(i).Phone+orgzooInfo.get(i).Age+orgzooInfo.get(i).Name+orgzooInfo.get(i).Resettlement;
-                        Log.d("TAG","org"+orgzooInfo.get(i).Type);
-                        if (title.contains(charSequence)) {
-
-                            Log.d("charSequence",charSequence.toString());
+                        if (title.toString().trim().contains(charSequence.toString().trim())) {
+                            Log.d("TAG",i+":"+title);
                             filteredItem.add(orgzooInfo.get(i));
-                            Log.d("Title1",i+":"+title);
                         }
                     }
                     result.count=filteredItem.size();
                     result.values=filteredItem;
-
                 }else {
-
                     synchronized (this){
                         Log.d("TAG","synchronized");
                         List<ZooInfo>list =new ArrayList<ZooInfo>(orgzooInfo);
@@ -124,17 +118,20 @@ class MyAdapter extends BaseAdapter implements Filterable {
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            //
-               orgzooInfo = (ArrayList<ZooInfo>)filterResults.values;
-                for(int i=0;i<orgzooInfo.size();i++)
-                if(filterResults.count>0){
-                    notifyDataSetChanged();
-                }   else{
-                    notifyDataSetInvalidated();
+
+                orgzooInfo = (ArrayList<ZooInfo>) filterResults.values;
+                for (int j = 0; j < orgzooInfo.size(); j++) {
+                    Log.d("TAG", j + ":" + orgzooInfo.get(j).Type);
+                    if (filterResults.count > 0) {
+                        notifyDataSetChanged();
+                        Log.d("TAG", "NDS" + orgzooInfo.get(j).Resettlement);
+                    } else {
+                        notifyDataSetInvalidated();
+                    }
                 }
             }
         };
-        Log.d("TAG","搜尋成功");
+        Log.d("TAG","結束");
         return filter;
     }
     static class  ViewHolder{

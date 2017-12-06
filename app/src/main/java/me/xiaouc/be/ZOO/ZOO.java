@@ -29,7 +29,6 @@ import me.xiaouc.be.R;
 public class ZOO extends AppCompatActivity {
     ListView lv;
     MyAdapter adapter;
-    Spinner spinner;
     Myzoo z;
     SearchView searchView; //搜尋器
     @Override
@@ -56,28 +55,8 @@ public class ZOO extends AppCompatActivity {
                          z = gson.fromJson(response, Myzoo.class);
                         Log.d("TAG", "解析");
                         adapter = new MyAdapter(ZOO.this, z.result.results);
-                        adapter.zooInfo.remove(0);
                         adapter.notifyDataSetChanged();
                         lv.setAdapter(adapter);
-
-
-                        //===============================
-//                        lv.setTextFilterEnabled(true);
-//                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                            @Override
-//                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                                Toast.makeText(ZOO.this,"You Choose "+i+" listItem",Toast.LENGTH_SHORT).show();
-//                                Log.d("TAG", "listview 過濾器");
-//                            }
-//                        });
-                        //================================
-//                            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                            @Override
-//                            public void onItemClick(AdapterView<?>
-//                                Intent it = new Intent(ZOO.this, ZooMessageActivity.class);
-//                                startActivity(it);
-//                           }
-//                       });
                     }
                 }, new Response.ErrorListener() {
          //失敗
