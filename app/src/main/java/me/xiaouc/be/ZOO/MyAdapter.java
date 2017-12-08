@@ -27,7 +27,7 @@ import me.xiaouc.be.R;
 class MyAdapter extends BaseAdapter implements Filterable {
     Context context;
     List<ZooInfo> zooInfo;
-    List<ZooInfo> orgzooInfo;
+    ArrayList<ZooInfo> orgzooInfo;
     LayoutInflater inflater;
     public MyAdapter(Context context,List<ZooInfo> zooInfo){
         this.context = context;
@@ -40,7 +40,7 @@ class MyAdapter extends BaseAdapter implements Filterable {
     }
 
     @Override
-    public Object getItem(int i) {
+    public ZooInfo getItem(int i) {
         return zooInfo.get(i);
     }
 
@@ -81,12 +81,10 @@ class MyAdapter extends BaseAdapter implements Filterable {
         Filter filter = new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-
                 charSequence = charSequence.toString();
                 Log.d("TAG","FILTER"+charSequence);
                 FilterResults result =new FilterResults();
-                orgzooInfo =new ArrayList<ZooInfo>(zooInfo);
-
+//                orgzooInfo =new ArrayList<ZooInfo>(zooInfo);
                 if (orgzooInfo == null) {
                     synchronized (this) {
                         orgzooInfo =new ArrayList<ZooInfo>(zooInfo);
@@ -96,13 +94,13 @@ class MyAdapter extends BaseAdapter implements Filterable {
                     List<ZooInfo> filteredItem = new ArrayList<ZooInfo>();
                     for (int i =0;i<orgzooInfo.size();i++) {
                         String title = orgzooInfo.get(i).Type+orgzooInfo.get(i).Phone+orgzooInfo.get(i).Age+orgzooInfo.get(i).Name+orgzooInfo.get(i).Resettlement;
-                        if (title.toString().trim().contains(charSequence.toString().trim())) {
+                        if (title.contains(charSequence)) {
                             Log.d("TAG",i+":"+title);
                             filteredItem.add(orgzooInfo.get(i));
                         }
                     }
-                    result.count=filteredItem.size();
-                    result.values=filteredItem;
+                    result.count = filteredItem.size();
+                    result.values = filteredItem;
                 }else {
                     synchronized (this){
                         Log.d("TAG","synchronized");
@@ -119,8 +117,8 @@ class MyAdapter extends BaseAdapter implements Filterable {
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
 
-                orgzooInfo = (ArrayList<ZooInfo>) filterResults.values;
-                for (int j = 0; j < orgzooInfo.size(); j++) {
+                zooInfo = (ArrayList<ZooInfo>) filterResults.values;
+                for (int j = 0; j < zooInfo.size(); j++) {
                     Log.d("TAG", j + ":" + orgzooInfo.get(j).Type);
                     if (filterResults.count > 0) {
                         notifyDataSetChanged();
