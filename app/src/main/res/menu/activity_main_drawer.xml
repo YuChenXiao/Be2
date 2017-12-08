@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_mrt"
+            android:icon="@drawable/z"
+            android:title="@string/title_mrt" />
+        <item
+            android:id="@+id/nav_ths"
+            android:icon="@drawable/k"
+            android:title="@string/title_ths" />
+        <item
+            android:id="@+id/nav_tra"
+            android:icon="@drawable/t"
+            android:title="@string/title_tra" />
+        <item
+            android:id="@+id/nav_bus"
+            android:icon="@drawable/b"
+            android:title="@string/title_bus" />
+        <item
+            android:id="@+id/nav_zoo"
+            android:icon="@drawable/zo"
+            android:title="@string/title_zoo" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="設定" />
+    </group>
+
+    <item android:title="聯絡我">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="分享" />
+            <item
+                android:id="@+id/nav_email"
+                android:icon="@drawable/ic_menu_send"
+                android:title="E-mail" />
+            <item
+                android:id="@+id/nav_github"
+                android:icon="@drawable/github"
+                android:title="Github" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_mrt"
+        android:icon="@drawable/z"
+        android:title="@string/title_mrt" />
+
+    <item
+        android:id="@+id/navigation_ths"
+        android:icon="@drawable/k"
+        android:title="@string/title_ths" />
+    <item
+    android:id="@+id/navigation_dashboard"
+    android:icon="@drawable/t"
+    android:title="@string/title_tra" />
+
+    <item
+        android:id="@+id/navigation_bus"
+        android:icon="@drawable/b"
+        android:title="@string/title_bus" />
+    <item
+        android:id="@+id/navigation_zoo"
+        android:icon="@drawable/zo"
+        android:title="@string/title_zoo" />
+
+</menu>
