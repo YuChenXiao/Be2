@@ -1,0 +1,872 @@
+Index: app/src/main/java/me/xiaouc/be/SERVICE/MyService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/me/xiaouc/be/SERVICE/MyService.java	(revision )
++++ app/src/main/java/me/xiaouc/be/SERVICE/MyService.java	(revision )
+@@ -0,0 +1,27 @@
++package me.xiaouc.be.SERVICE;
++
++import android.util.Log;
++
++import com.google.firebase.iid.FirebaseInstanceId;
++import com.google.firebase.iid.FirebaseInstanceIdService;
++
++/**
++ * Created by ROOT on 2017/11/29.
++ */
++
++public class MyService extends FirebaseInstanceIdService {
++    @Override
++    public void onTokenRefresh() {
++        // Get updated InstanceID token.
++        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
++        Log.d("TAG", "Refreshed token: " + refreshedToken);
++
++        // If you want to send messages to this application instance or
++        // manage this apps subscriptions on the server side, send the
++        // Instance ID token to your app server.
++        sendRegistrationToServer(refreshedToken);
++    }
++
++    private void sendRegistrationToServer(String refreshedToken) {
++    }
++}
+Index: app/src/main/java/me/xiaouc/be/ZOO/CustomAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/me/xiaouc/be/ZOO/CustomAdapter.java	(revision )
++++ app/src/main/java/me/xiaouc/be/ZOO/CustomAdapter.java	(revision )
+@@ -0,0 +1,115 @@
++package me.xiaouc.be.ZOO;
++
++import android.content.Context;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.BaseAdapter;
++import android.widget.Filter;
++import android.widget.Filterable;
++import android.widget.ImageView;
++import android.widget.TextView;
++import com.squareup.picasso.Picasso;
++import java.util.ArrayList;
++import java.util.List;
++import me.xiaouc.be.R;
++
++/**
++ * Created by ROOT on 2017/11/30.
++ */
++public class CustomAdapter extends BaseAdapter implements Filterable {
++    List<String> item;
++    List<String> originalitem;
++    private LayoutInflater mLayout;
++    Context context;
++    ZooInfo[] zooInfo;
++
++    public CustomAdapter(Context context, List<String> mList) {
++        mLayout = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
++        this.item = mList;
++        this.context = context;
++        this.zooInfo = zooInfo;
++    }
++
++    @Override
++    public int getCount() {
++        return item.size();
++    }
++    @Override
++    public Object getItem(int position) {
++        return position;
++    }
++    @Override
++    public long getItemId(int position) {
++        return position;
++    }
++
++    @Override
++    public View getView(int position, View convertView, ViewGroup parent) {
++        // R.layout.custom_layout 是你自己創的自訂layout( 可參考下面)
++        View v = mLayout.inflate(R.layout.zooitem,parent,false);
++        TextView tv =(TextView)v.findViewById(R.id.textView);
++        tv.setText(zooInfo[position].Name);
++        ImageView img =(ImageView)v.findViewById(R.id.imageView);
++        Picasso.with(context).load(zooInfo[position].ImageName).into(img);
++        TextView tv2 =(TextView)v.findViewById(R.id.textView2);
++        tv2.setText(zooInfo[position].Type);
++        TextView tv3 =(TextView)v.findViewById(R.id.textView3);
++        tv3.setText(zooInfo[position].Age);
++        TextView tv4 =(TextView)v.findViewById(R.id.textView4);
++        tv4.setText("收容位置 :    "+zooInfo[position].Resettlement);
++        TextView tv5 =(TextView)v.findViewById(R.id.textView5);
++        tv5.setText("電話 : "+zooInfo[position].Phone);
++
++        return v;
++    }
++
++    @Override
++    public Filter getFilter() {
++        Filter filter = new Filter() {
++            @Override
++            protected FilterResults performFiltering(CharSequence constraint) {
++                constraint = constraint.toString();
++                FilterResults result = new FilterResults();
++                if(originalitem == null){
++                    synchronized (this){
++                        originalitem = new ArrayList<String>(item);
++                        // 若originalitem 沒有資料，會複製一份item的過來.
++                    }
++                }
++                if(constraint != null && constraint.toString().length()>0){
++                    ArrayList<String> filteredItem = new ArrayList<String>();
++                    for(int i=0;i<originalitem.size();i++){
++                        String title = originalitem.get(i).toString();
++                        if(title.contains(constraint)){
++                            filteredItem.add(title);
++                        }
++                    }
++                    result.count = filteredItem.size();
++                    result.values = filteredItem;
++                }else{
++                    synchronized (this){
++                        ArrayList<String> list = new ArrayList<String>(originalitem);
++                        result.values = list;
++                        result.count = list.size();
++
++                    }
++                }
++
++                return result;
++            }
++
++            @Override
++            protected void publishResults(CharSequence constraint, FilterResults results) {
++                item = (ArrayList<String>)results.values;
++                if(results.count>0){
++                    notifyDataSetChanged();
++                }else{
++                    notifyDataSetInvalidated();
++                }
++            }
++        };
++
++        return filter;
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_zoo.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_zoo.xml	(revision da3d70d3fca848de7a9071f3352bf558ca50a266)
++++ app/src/main/res/layout/activity_zoo.xml	(revision )
+@@ -28,20 +28,29 @@
+ 
+     <TextView
+         android:id="@+id/textView6"
+-        android:layout_width="297dp"
+-        android:layout_height="55dp"
+-        android:layout_marginStart="68dp"
+-        android:layout_marginTop="60dp"
++        android:layout_width="185dp"
++        android:layout_height="40dp"
++        android:layout_marginEnd="8dp"
++        android:layout_marginStart="8dp"
++        android:layout_marginTop="52dp"
+         android:text="動物認養資訊"
+         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
++        android:textSize="30sp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.502"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="@+id/appBarLayout" />
+ 
+-    <ListView
+-        android:id="@+id/listview"
+-        android:layout_width="380dp"
+-        android:layout_height="413dp"
+-        android:layout_marginTop="32dp"
++    <SearchView
++        android:id="@+id/searchView"
++        android:layout_width="181dp"
++        android:layout_height="26dp"
++        android:layout_alignParentEnd="true"
++        android:layout_alignParentRight="true"
++        android:layout_alignParentTop="true"
++        android:layout_marginEnd="8dp"
++        android:layout_marginStart="8dp"
++        app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/textView6" />
+ 
+@@ -49,29 +58,30 @@
+         android:id="@+id/imageView2"
+         android:layout_width="45dp"
+         android:layout_height="44dp"
++        android:layout_marginEnd="8dp"
+         android:layout_marginStart="16dp"
+         android:layout_marginTop="60dp"
++        app:layout_constraintEnd_toStartOf="@+id/textView6"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:srcCompat="@drawable/zo" />
+ 
+-    <Spinner
+-        android:id="@+id/spinner6"
+-        android:layout_width="103dp"
+-        android:layout_height="25dp"
+-        android:layout_marginStart="8dp"
+-        app:layout_constraintStart_toEndOf="@+id/textView18"
+-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+-
+     <TextView
+         android:id="@+id/textView18"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="92dp"
+-        android:text="我想搜尋 :"
+-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
++        android:text="搜尋 :"
++        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+         android:textSize="18sp"
+-        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintEnd_toStartOf="@+id/searchView"
+         app:layout_constraintTop_toBottomOf="@+id/textView6" />
+ 
++    <ListView
++        android:id="@+id/listview"
++        android:layout_width="380dp"
++        android:layout_height="437dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/searchView" />
++
+ </android.support.constraint.ConstraintLayout>
+Index: app/google-services.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/google-services.json	(revision da3d70d3fca848de7a9071f3352bf558ca50a266)
++++ app/google-services.json	(revision )
+@@ -1,35 +1,27 @@
+ {
+   "project_info": {
+-    "project_number": "6346558748",
+-    "firebase_url": "https://befirbase.firebaseio.com",
+-    "project_id": "befirbase",
+-    "storage_bucket": "befirbase.appspot.com"
++    "project_number": "1023958668024",
++    "firebase_url": "https://befire-affb1.firebaseio.com",
++    "project_id": "befire-affb1",
++    "storage_bucket": "befire-affb1.appspot.com"
+   },
+   "client": [
+     {
+       "client_info": {
+-        "mobilesdk_app_id": "1:6346558748:android:ab436708d8473eca",
++        "mobilesdk_app_id": "1:1023958668024:android:ab436708d8473eca",
+         "android_client_info": {
+           "package_name": "me.xiaouc.be"
+         }
+       },
+       "oauth_client": [
+         {
+-          "client_id": "6346558748-kftt5ov94qmn8no6spn53e0f8mr07slj.apps.googleusercontent.com",
+-          "client_type": 1,
+-          "android_info": {
+-            "package_name": "me.xiaouc.be",
+-            "certificate_hash": "8e6dba465cbf4876532dedcf39bd2134c92cfc69"
+-          }
+-        },
+-        {
+-          "client_id": "6346558748-s2eln2ljk62ro920opaoj2t0qu95b97d.apps.googleusercontent.com",
++          "client_id": "1023958668024-l754rt9u6g6rfdrolsrb4jb1h1mur3ls.apps.googleusercontent.com",
+           "client_type": 3
+         }
+       ],
+       "api_key": [
+         {
+-          "current_key": "AIzaSyCZDrpT7Z3bR0WtuNQujsVygKQtWL9mIMA"
++          "current_key": "AIzaSyCi53cjqrk-R8Rk5FPEfcia_xLaGOCD_4Q"
+         }
+       ],
+       "services": {
+@@ -37,13 +29,8 @@
+           "status": 1
+         },
+         "appinvite_service": {
+-          "status": 2,
+-          "other_platform_oauth_client": [
+-            {
+-              "client_id": "6346558748-s2eln2ljk62ro920opaoj2t0qu95b97d.apps.googleusercontent.com",
+-              "client_type": 3
+-            }
+-          ]
++          "status": 1,
++          "other_platform_oauth_client": []
+         },
+         "ads_service": {
+           "status": 2
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision da3d70d3fca848de7a9071f3352bf558ca50a266)
++++ .idea/misc.xml	(revision )
+@@ -24,7 +24,7 @@
+       </value>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/java/me/xiaouc/be/ZOO/ZOO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/me/xiaouc/be/ZOO/ZOO.java	(revision da3d70d3fca848de7a9071f3352bf558ca50a266)
++++ app/src/main/java/me/xiaouc/be/ZOO/ZOO.java	(revision )
+@@ -1,6 +1,7 @@
+ package me.xiaouc.be.ZOO;
+ import android.content.Context;
+ import android.content.Intent;
++import android.net.Uri;
+ import android.support.v7.app.AppCompatActivity;
+ import android.os.Bundle;
+ import android.util.Log;
+@@ -8,7 +9,10 @@
+ import android.widget.AdapterView;
+ import android.widget.ArrayAdapter;
+ import android.widget.ListView;
++import android.widget.SearchView;
+ import android.widget.Spinner;
++import android.widget.Toast;
++
+ import com.android.volley.RequestQueue;
+ import com.android.volley.Response;
+ import com.android.volley.VolleyError;
+@@ -23,16 +27,30 @@
+     ListView lv;
+     MyAdapter adapter;
+     Spinner spinner;
+-
+-    ArrayList<ZooInfo>dogarr ;
+-    ArrayList<ZooInfo>catarr ;
+-    ArrayList<ZooInfo>otherarr ;
++    Myzoo z;
++    SearchView searchView; //搜尋器
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_zoo);
+         lv = (ListView) findViewById(R.id.listview);
+-        spinner=(Spinner)findViewById(R.id.spinner6);
++        searchView=(SearchView)findViewById(R.id.searchView);
++        searchView.setIconifiedByDefault(false);
++        searchView.setFocusable(false);
++        setTitle("動物認養資訊");
++        searchView.setQueryHint("輸入犬貓搜尋");
++        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
++            @Override
++            public boolean onQueryTextSubmit(String query) {
++                return false;
++            }
++
++            @Override
++            public boolean onQueryTextChange(String newText) {
++                adapter.getFilter().filter(newText);
++                return true;
++            }
++        });
+ 
+         //擷取api 用gson解析
+         RequestQueue queue = Volley.newRequestQueue(ZOO.this);
+@@ -43,25 +61,24 @@
+                     public void onResponse(String response) {
+                         Log.d("TAG","成功");
+                         Gson gson = new Gson();
+-                        Myzoo z = gson.fromJson(response, Myzoo.class);
+-                        Log.d("ZOO", "解析");
++                         z = gson.fromJson(response, Myzoo.class);
++                        Log.d("TAG", "解析");
+                         adapter = new MyAdapter(ZOO.this, z.result.results);
+-
+-//                        for (int i=0;i<response.length();i++){
+-//                            Log.d("TAG","迴圈正常");
+-//                            if(z.result.results[i].Type.equals("犬")){
+-//                                Log.d("TAG","犬");
+-//                                dogarr.add(z.result.results[i]);
+-//                            }else if( z.result.results[i].Type.equals("貓")){
+-//                                Log.d("TAG","貓");
+-//                                catarr.add(z.result.results[i]);
+-//                            }else{
+-//                                Log.d("TAG","其他");
+-//                                otherarr.add(z.result.results[i]);
+-//                            }
+-//                        }
++                        adapter.zooInfo.remove(0);
++                        adapter.notifyDataSetChanged();
+                         lv.setAdapter(adapter);
+ 
++
++                        //===============================
++//                        lv.setTextFilterEnabled(true);
++//                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
++//                            @Override
++//                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
++//                                Toast.makeText(ZOO.this,"You Choose "+i+" listItem",Toast.LENGTH_SHORT).show();
++//                                Log.d("TAG", "listview 過濾器");
++//                            }
++//                        });
++                        //================================
+ //                            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+ //                            @Override
+ //                            public void onItemClick(AdapterView<?>
+@@ -81,39 +98,15 @@
+         queue.add(request);
+         queue.start();
+         Log.d("TAG","輸出");
+-    //spinner 選單
+-    final ArrayAdapter adapters = ArrayAdapter.createFromResource(this,R.array.zoo,android.R.layout.simple_spinner_item);
+-        adapters.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+-        spinner.setAdapter(adapters);
+-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+-            @Override
+-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+-                String name = spinner.getItemAtPosition(position).toString();
+-                Log.d("TAG","選單正常");
+-                switch (position + 1) {
+-                    case 1:
++        lv.setOnItemClickListener(listener);
++        lv.setTextFilterEnabled(true);
++   }
++AdapterView.OnItemClickListener listener =new AdapterView.OnItemClickListener() {
++    @Override
++    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+ 
+-                        lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+-                        Log.d("TAG","選單1正常");
+-                        break;
+-                    case 2:
+-
+-                        lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+-                        Log.d("TAG","選單2正常");
+-                        break;
+-                    case 3:
+-
+-                        lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+-                        Log.d("TAG","選單3正常");
+-                        break;
+-                }
+-            }
+-            @Override
+-            public void onNothingSelected(AdapterView<?> adapterView) {
+-            }
+-        });
+-   }
+-
++    }
++};
+     //返回鍵
+     public void clickBack(View v){
+         Intent intent = new Intent();
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision da3d70d3fca848de7a9071f3352bf558ca50a266)
++++ build.gradle	(revision )
+@@ -11,6 +11,8 @@
+ 
+         // NOTE: Do not place your application dependencies here; they belong
+         // in the individual module build.gradle files
++        classpath 'com.google.gms:google-services:3.1.0'
++
+     }
+ }
+ 
+Index: app/src/main/java/me/xiaouc/be/SERVICE/MyMessageReceiveService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/me/xiaouc/be/SERVICE/MyMessageReceiveService.java	(revision )
++++ app/src/main/java/me/xiaouc/be/SERVICE/MyMessageReceiveService.java	(revision )
+@@ -0,0 +1,45 @@
++package me.xiaouc.be.SERVICE;
++
++import android.util.Log;
++
++import com.google.firebase.messaging.FirebaseMessagingService;
++import com.google.firebase.messaging.RemoteMessage;
++
++/**
++ * Created by ROOT on 2017/11/29.
++ */
++
++public class MyMessageReceiveService extends FirebaseMessagingService {
++    @Override
++    public void onMessageReceived(RemoteMessage remoteMessage) {
++        // ...
++
++        // TODO(developer): Handle FCM messages here.
++        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
++        Log.d("TAG", "From: " + remoteMessage.getFrom());
++
++        // Check if message contains a data payload.
++        if (remoteMessage.getData().size() > 0) {
++            Log.d("TAG", "Message data payload: " + remoteMessage.getData());
++
++//            if (/* Check if data needs to be processed by long running job */ true) {
++//                // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
++//                scheduleJob();
++//            } else {
++//                // Handle message within 10 seconds
++//                handleNow();
++//            }
++
++        }
++
++        // Check if message contains a notification payload.
++        if (remoteMessage.getNotification() != null) {
++            Log.d("TAG", "Message Notification Body: " + remoteMessage.getNotification().getBody());
++        }
++
++        // Also if you intend on generating your own notifications as a result of a received FCM
++        // message, here is where that should be initiated. See sendNotification method below.
++    }
++
++
++}
+Index: app/src/main/java/me/xiaouc/be/ZOO/ZooDetail.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/me/xiaouc/be/ZOO/ZooDetail.java	(revision da3d70d3fca848de7a9071f3352bf558ca50a266)
++++ app/src/main/java/me/xiaouc/be/ZOO/ZooDetail.java	(revision )
+@@ -1,9 +1,11 @@
+ package me.xiaouc.be.ZOO;
+ 
++import java.util.List;
++
+ /**
+  * Created by auser on 2017/11/9.
+  */
+ 
+ public class ZooDetail {
+-    public ZooInfo[] results ;
++    public List<ZooInfo> results ;
+ }
+Index: app/src/main/res/layout/zooitem.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/zooitem.xml	(revision da3d70d3fca848de7a9071f3352bf558ca50a266)
++++ app/src/main/res/layout/zooitem.xml	(revision )
+@@ -10,75 +10,72 @@
+ 
+     <ImageView
+         android:id="@+id/imageView"
+-        android:layout_width="142dp"
+-        android:layout_height="138dp"
+-        android:layout_marginStart="8dp"
++        android:layout_width="155dp"
++        android:layout_height="160dp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+-        app:srcCompat="@mipmap/ic_launcher"
+-        android:layout_marginLeft="8dp" />
++        app:srcCompat="@mipmap/ic_launcher" />
+ 
+     <TextView
+         android:id="@+id/textView"
+         android:layout_width="155dp"
+-        android:layout_height="23dp"
++        android:layout_height="22dp"
+         android:layout_marginEnd="8dp"
+-        android:layout_marginTop="4dp"
+-        android:text="TextView"
+-        android:textSize="20sp"
++        android:textSize="18sp"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintTop_toTopOf="parent"
+-        android:layout_marginRight="8dp" />
++        app:layout_constraintTop_toTopOf="parent" />
+ 
+     <TextView
+         android:id="@+id/textView2"
+         android:layout_width="155dp"
+-        android:layout_height="24dp"
++        android:layout_height="18dp"
+         android:layout_marginEnd="8dp"
+-        android:text="TextView"
++        android:textSize="12sp"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/textView"
+-        android:layout_marginRight="8dp" />
++        app:layout_constraintTop_toBottomOf="@+id/textView" />
+ 
+     <TextView
+         android:id="@+id/textView3"
+         android:layout_width="155dp"
+         android:layout_height="20dp"
+         android:layout_marginEnd="8dp"
+-        android:text="TextView"
++        android:textSize="12sp"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+-        android:layout_marginRight="8dp" />
++        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+ 
+     <TextView
+         android:id="@+id/textView4"
+         android:layout_width="219dp"
+-        android:layout_height="48dp"
+-        android:layout_marginEnd="16dp"
++        android:layout_height="25dp"
++        android:layout_marginEnd="8dp"
+         android:layout_marginStart="8dp"
+         android:gravity="center"
+-        android:text="TextView"
+-        android:textSize="14sp"
++        android:textSize="12sp"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.466"
++        app:layout_constraintHorizontal_bias="1.0"
+         app:layout_constraintStart_toEndOf="@+id/imageView"
+-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+-        android:layout_marginRight="16dp"
+-        android:layout_marginLeft="8dp" />
++        app:layout_constraintTop_toBottomOf="@+id/textViewnote" />
++
++    <TextView
++        android:id="@+id/textViewnote"
++        android:layout_width="219dp"
++        android:layout_height="55dp"
++        android:layout_marginEnd="8dp"
++        android:gravity="center"
++        android:textSize="12sp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+ 
+     <TextView
+         android:id="@+id/textView5"
+-        android:layout_width="223dp"
++        android:layout_width="219dp"
+         android:layout_height="19dp"
+-        android:layout_marginEnd="16dp"
+-        android:layout_marginStart="8dp"
++        android:layout_marginEnd="8dp"
+         android:gravity="center"
+-        android:text="TextView"
+         app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="1.0"
+         app:layout_constraintStart_toEndOf="@+id/imageView"
+-        app:layout_constraintTop_toBottomOf="@+id/textView4"
+-        android:layout_marginLeft="8dp"
+-        android:layout_marginRight="16dp" />
++        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+ 
+     <TextView
+         android:id="@+id/textView8"
+@@ -86,7 +83,6 @@
+         android:layout_height="23dp"
+         android:layout_marginEnd="8dp"
+         android:layout_marginStart="8dp"
+-        android:layout_marginTop="10dp"
+         android:text="名   字 :"
+         app:layout_constraintEnd_toStartOf="@+id/textView"
+         app:layout_constraintStart_toEndOf="@+id/imageView"
+Index: app/src/main/java/me/xiaouc/be/ZOO/MyAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/me/xiaouc/be/ZOO/MyAdapter.java	(revision da3d70d3fca848de7a9071f3352bf558ca50a266)
++++ app/src/main/java/me/xiaouc/be/ZOO/MyAdapter.java	(revision )
+@@ -1,62 +1,151 @@
+ package me.xiaouc.be.ZOO;
+ 
+ import android.content.Context;
++import android.support.v7.widget.RecyclerView;
+ import android.util.Log;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
+ import android.widget.BaseAdapter;
+ import android.widget.EditText;
++import android.widget.Filter;
++import android.widget.Filterable;
+ import android.widget.ImageView;
+ import android.widget.TextView;
+ 
+ import com.squareup.picasso.Picasso;
+ 
++import java.io.File;
++import java.util.ArrayList;
++import java.util.List;
++
+ import me.xiaouc.be.R;
+ 
+ /**
+  * Created by ROOT on 2017/11/22.
+  */
+-class MyAdapter extends BaseAdapter {
++class MyAdapter extends BaseAdapter implements Filterable {
+     Context context;
+-    ZooInfo[] zooInfo;
+-    public MyAdapter(Context context,ZooInfo[] zooInfo){
++//    ZooInfo[] zooInfo;
++    List<ZooInfo> zooInfo;
++    ArrayList<ZooInfo> orgzooInfo;
++    LayoutInflater inflater;
++    public MyAdapter(Context context,List<ZooInfo> zooInfo){
+         this.context = context;
+         this.zooInfo = zooInfo;
++        inflater =LayoutInflater.from(context);
+     }
+     @Override
+     public int getCount() {
+-        return zooInfo.length;
++        return zooInfo.size();
+     }
+ 
+     @Override
+     public Object getItem(int i) {
+-        return null;
++        return zooInfo.get(i);
+     }
+ 
+     @Override
+     public long getItemId(int i) {
+-        return 0;
++        return i;
+     }
+ 
+     @Override
+-    public View getView(int position, View conveview, ViewGroup parent) {
++    public View getView(int position, View view, ViewGroup viewGroup) {
++        ViewHolder holder;
+         LayoutInflater inflater =LayoutInflater.from(context);
+-        View v =inflater.inflate(R.layout.zooitem,null);
+-        TextView tv =(TextView)v.findViewById(R.id.textView);
+-        tv.setText(zooInfo[position].Name);
+-        ImageView img =(ImageView)v.findViewById(R.id.imageView);
+-        Picasso.with(context).load(zooInfo[position].ImageName).into(img);
+-        TextView tv2 =(TextView)v.findViewById(R.id.textView2);
+-        tv2.setText(zooInfo[position].Type);
+-        TextView tv3 =(TextView)v.findViewById(R.id.textView3);
+-        tv3.setText(zooInfo[position].Age);
+-        TextView tv4 =(TextView)v.findViewById(R.id.textView4);
+-        tv4.setText("收容位置 :    "+zooInfo[position].Resettlement);
+-        TextView tv5 =(TextView)v.findViewById(R.id.textView5);
+-        tv5.setText("電話 : "+zooInfo[position].Phone);
++        view =inflater.inflate(R.layout.zooitem,viewGroup,false);
++        holder =new ViewHolder();
++        holder.Resettlement=(TextView) view.findViewById(R.id.textView4);
++        holder.Phone=(TextView) view.findViewById(R.id.textView5);
++        holder.Type=(TextView) view.findViewById(R.id.textView2);
++        holder.Name=(TextView) view.findViewById(R.id.textView);
++        holder.Age=(TextView) view.findViewById(R.id.textView3);
++        holder.Note=(TextView)view.findViewById(R.id.textViewnote);
++        holder.img =(ImageView)view.findViewById(R.id.imageView);
++         Picasso.with(context).load(zooInfo.get(position).ImageName).into(holder.img);
++        view.setTag(holder);
++        if (position!=0)
++            holder.Name.setText(zooInfo.get(position).Name);
++        holder.Resettlement.setText(zooInfo.get(position).Resettlement);
++        holder.Age.setText(zooInfo.get(position).Age);
++        holder.Type.setText(zooInfo.get(position).Type);
++        holder.Note.setText(zooInfo.get(position).Note);
++        holder.Phone.setText(zooInfo.get(position).Phone);
+ 
+ 
+-        return v;
++        return view;
+         }
++
++    @Override
++    public Filter getFilter() {
++        Filter filter = new Filter() {
++            @Override
++            protected FilterResults performFiltering(CharSequence charSequence) {
++
++                charSequence =charSequence.toString();
++                Log.d("TAG","FILTER"+charSequence);
++                FilterResults results =new FilterResults();
++                if (orgzooInfo == null){
++                    synchronized (this){
++                        orgzooInfo =new ArrayList<ZooInfo>(zooInfo);
++                    }
++                }
++                if (charSequence != null && charSequence.toString().length()>0){
++                    Log.d("TAG","AAAAAAA");
++                    List<ZooInfo> filteredItem =new ArrayList<ZooInfo>();
++                    List<ZooInfo> nofilteredItem =new ArrayList<ZooInfo>();
++                    for (int i =0;i<orgzooInfo.size();i++){
++                        String title =orgzooInfo.get(i).Type+orgzooInfo.get(i).Phone+orgzooInfo.get(i).Age+orgzooInfo.get(i).Name+orgzooInfo.get(i).Resettlement;
++
++
++                        if (title.contains(charSequence)){
++                            Log.d("Title",i+":"+title);
++                            Log.d("charSequence",charSequence.toString());
++                            filteredItem.add(orgzooInfo.get(i));
++
++                           }else {
++                            filteredItem.add(orgzooInfo.get(i));
++
++                    }
++                    }
++                    results.count=filteredItem.size();
++                    results.values=filteredItem;
++
++                }else {
++                    synchronized (this){
++                        Log.d("TAG","synchronized");
++                        List<ZooInfo>list =new ArrayList<ZooInfo>(orgzooInfo);
++                        results.count=list.size()
++                        ;results.values=list;
++                    }
++                }
++                Log.d("count",""+results.count);
++                Log.d("results",""+results.values.toString());
++                return results;
++            }
++
++            @Override
++            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
++            orgzooInfo=(ArrayList<ZooInfo>)filterResults.values;
++            for (int i =0 ;i<orgzooInfo.size();i++){
++                if (filterResults.count>0){
++                    notifyDataSetChanged();
++                }else {
++                    notifyDataSetInvalidated();
++                }
++            }
++            }
++        };
++         return filter;
++    }
++    static class  ViewHolder{
++        TextView Resettlement;
++        TextView Phone;
++        TextView Age;
++        TextView Type;
++        TextView Name;
++        ImageView img;
++        TextView Note;
++    }
+ }
+\ No newline at end of file

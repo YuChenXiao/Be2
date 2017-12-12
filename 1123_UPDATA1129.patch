@@ -1,0 +1,394 @@
+Index: app/google-services.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/google-services.json	(revision )
++++ app/google-services.json	(revision )
+@@ -0,0 +1,55 @@
++{
++  "project_info": {
++    "project_number": "6346558748",
++    "firebase_url": "https://befirbase.firebaseio.com",
++    "project_id": "befirbase",
++    "storage_bucket": "befirbase.appspot.com"
++  },
++  "client": [
++    {
++      "client_info": {
++        "mobilesdk_app_id": "1:6346558748:android:ab436708d8473eca",
++        "android_client_info": {
++          "package_name": "me.xiaouc.be"
++        }
++      },
++      "oauth_client": [
++        {
++          "client_id": "6346558748-kftt5ov94qmn8no6spn53e0f8mr07slj.apps.googleusercontent.com",
++          "client_type": 1,
++          "android_info": {
++            "package_name": "me.xiaouc.be",
++            "certificate_hash": "8e6dba465cbf4876532dedcf39bd2134c92cfc69"
++          }
++        },
++        {
++          "client_id": "6346558748-s2eln2ljk62ro920opaoj2t0qu95b97d.apps.googleusercontent.com",
++          "client_type": 3
++        }
++      ],
++      "api_key": [
++        {
++          "current_key": "AIzaSyCZDrpT7Z3bR0WtuNQujsVygKQtWL9mIMA"
++        }
++      ],
++      "services": {
++        "analytics_service": {
++          "status": 1
++        },
++        "appinvite_service": {
++          "status": 2,
++          "other_platform_oauth_client": [
++            {
++              "client_id": "6346558748-s2eln2ljk62ro920opaoj2t0qu95b97d.apps.googleusercontent.com",
++              "client_type": 3
++            }
++          ]
++        },
++        "ads_service": {
++          "status": 2
++        }
++      }
++    }
++  ],
++  "configuration_version": "1"
++}
+\ No newline at end of file
+Index: app/src/main/java/me/xiaouc/be/ZOO/ZooInfo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/me/xiaouc/be/ZOO/ZooInfo.java	(revision 95a56dd3ea062f1282e41e4b100e61370981f6de)
++++ app/src/main/java/me/xiaouc/be/ZOO/ZooInfo.java	(revision )
+@@ -1,5 +1,6 @@
+ package me.xiaouc.be.ZOO;
+ 
++
+ /**
+  * Created by ROOT on 2017/11/9.
+  */
+Index: app/src/main/res/layout/activity_zoo.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_zoo.xml	(revision 95a56dd3ea062f1282e41e4b100e61370981f6de)
++++ app/src/main/res/layout/activity_zoo.xml	(revision )
+@@ -28,31 +28,50 @@
+ 
+     <TextView
+         android:id="@+id/textView6"
+-        android:layout_width="207dp"
+-        android:layout_height="46dp"
+-        android:layout_marginStart="88dp"
++        android:layout_width="297dp"
++        android:layout_height="55dp"
++        android:layout_marginStart="68dp"
+         android:layout_marginTop="60dp"
+         android:text="動物認養資訊"
+-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
++        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="@+id/appBarLayout" />
+ 
+     <ListView
+         android:id="@+id/listview"
+-        android:layout_width="373dp"
+-        android:layout_height="448dp"
+-        android:layout_marginTop="8dp"
++        android:layout_width="380dp"
++        android:layout_height="413dp"
++        android:layout_marginTop="32dp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/textView6" />
+ 
+     <ImageView
+         android:id="@+id/imageView2"
+-        android:layout_width="42dp"
+-        android:layout_height="42dp"
+-        android:layout_marginStart="32dp"
++        android:layout_width="45dp"
++        android:layout_height="44dp"
++        android:layout_marginStart="16dp"
+         android:layout_marginTop="60dp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:srcCompat="@drawable/zo" />
+ 
++    <Spinner
++        android:id="@+id/spinner6"
++        android:layout_width="103dp"
++        android:layout_height="25dp"
++        android:layout_marginStart="8dp"
++        app:layout_constraintStart_toEndOf="@+id/textView18"
++        app:layout_constraintTop_toBottomOf="@+id/textView6" />
++
++    <TextView
++        android:id="@+id/textView18"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="92dp"
++        android:text="我想搜尋 :"
++        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
++        android:textSize="18sp"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/textView6" />
++
+ </android.support.constraint.ConstraintLayout>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision 95a56dd3ea062f1282e41e4b100e61370981f6de)
++++ .idea/misc.xml	(revision )
+@@ -24,7 +24,7 @@
+       </value>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/java/me/xiaouc/be/ZOO/ZOO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/me/xiaouc/be/ZOO/ZOO.java	(revision 95a56dd3ea062f1282e41e4b100e61370981f6de)
++++ app/src/main/java/me/xiaouc/be/ZOO/ZOO.java	(revision )
+@@ -1,103 +1,120 @@
+ package me.xiaouc.be.ZOO;
+ import android.content.Context;
+ import android.content.Intent;
+-import android.os.AsyncTask;
+ import android.support.v7.app.AppCompatActivity;
+ import android.os.Bundle;
+-import android.support.v7.widget.LinearLayoutManager;
+-import android.support.v7.widget.RecyclerView;
+ import android.util.Log;
+-import android.view.LayoutInflater;
+ import android.view.View;
+-import android.view.ViewGroup;
+ import android.widget.AdapterView;
+ import android.widget.ArrayAdapter;
+-import android.widget.BaseAdapter;
+-import android.widget.ImageView;
+-import android.widget.ListAdapter;
+ import android.widget.ListView;
+-import android.widget.TextView;
+-
++import android.widget.Spinner;
+ import com.android.volley.RequestQueue;
+ import com.android.volley.Response;
+ import com.android.volley.VolleyError;
+ import com.android.volley.toolbox.StringRequest;
+ import com.android.volley.toolbox.Volley;
+ import com.google.gson.Gson;
+-import com.google.gson.JsonArray;
+-import com.google.gson.JsonElement;
+-import com.google.gson.JsonParser;
+-import com.google.gson.reflect.TypeToken;
+-import com.squareup.picasso.Picasso;
+-
+-import org.json.JSONArray;
+-import org.json.JSONException;
+-import org.json.JSONObject;
+-import java.io.BufferedReader;
+-import java.io.IOException;
+-import java.io.InputStreamReader;
+-import java.lang.reflect.Array;
+-import java.net.MalformedURLException;
+-import java.net.URL;
+ import java.util.ArrayList;
+-import java.util.List;
+-
+ import me.xiaouc.be.MainActivity;
+-import me.xiaouc.be.Mrt;
+ import me.xiaouc.be.R;
+ 
+ public class ZOO extends AppCompatActivity {
+     ListView lv;
+-    Context context;
+     MyAdapter adapter;
++    Spinner spinner;
+ 
+-    ArrayList<ZooInfo> TYPE;
++    ArrayList<ZooInfo>dogarr ;
++    ArrayList<ZooInfo>catarr ;
++    ArrayList<ZooInfo>otherarr ;
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_zoo);
+         lv = (ListView) findViewById(R.id.listview);
++        spinner=(Spinner)findViewById(R.id.spinner6);
++
++        //擷取api 用gson解析
+         RequestQueue queue = Volley.newRequestQueue(ZOO.this);
+-        StringRequest request = new StringRequest("http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=f4a75ba9-7721-4363-884d-c3820b0b917c",
++        final StringRequest request = new StringRequest("http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=f4a75ba9-7721-4363-884d-c3820b0b917c",
+                 new Response.Listener<String>() {
++        //成功
+                     @Override
+                     public void onResponse(String response) {
++                        Log.d("TAG","成功");
+                         Gson gson = new Gson();
+-                        final Myzoo z = gson.fromJson(response, Myzoo.class);
+-                        Log.d("ZOO", z.result.results[0].Variety);
++                        Myzoo z = gson.fromJson(response, Myzoo.class);
++                        Log.d("ZOO", "解析");
+                         adapter = new MyAdapter(ZOO.this, z.result.results);
+ 
+-                        for (int i =0;i>response.length();i++){
+-                            if(z.result.results[0].Type=="狗"){
+-
+-
+-                                ArrayList<ZooInfo> TYPE;
+-                            }else if( z.result.results[0].Type=="貓"){
+-
+-
+-                            }else{
+-
+-
+-                            }
+-                        }
++//                        for (int i=0;i<response.length();i++){
++//                            Log.d("TAG","迴圈正常");
++//                            if(z.result.results[i].Type.equals("犬")){
++//                                Log.d("TAG","犬");
++//                                dogarr.add(z.result.results[i]);
++//                            }else if( z.result.results[i].Type.equals("貓")){
++//                                Log.d("TAG","貓");
++//                                catarr.add(z.result.results[i]);
++//                            }else{
++//                                Log.d("TAG","其他");
++//                                otherarr.add(z.result.results[i]);
++//                            }
++//                        }
+                         lv.setAdapter(adapter);
+-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+-                            @Override
+-                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+-                                Intent it = new Intent(ZOO.this, ZooMessageActivity.class);
+-                                startActivity(it);
+-                           }
+-                       });
++
++//                            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
++//                            @Override
++//                            public void onItemClick(AdapterView<?>
++//                                Intent it = new Intent(ZOO.this, ZooMessageActivity.class);
++//                                startActivity(it);
++//                           }
++//                       });
+                     }
+                 }, new Response.ErrorListener() {
++         //失敗
+             @Override
+             public void onErrorResponse(VolleyError error) {
++                Log.d("TAG","失敗");
+                 Log.d("ZOO", "Error" + error.toString());
+             }
+         });
+         queue.add(request);
+         queue.start();
+-    }
++        Log.d("TAG","輸出");
++    //spinner 選單
++    final ArrayAdapter adapters = ArrayAdapter.createFromResource(this,R.array.zoo,android.R.layout.simple_spinner_item);
++        adapters.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
++        spinner.setAdapter(adapters);
++        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
++            @Override
++            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
++                String name = spinner.getItemAtPosition(position).toString();
++                Log.d("TAG","選單正常");
++                switch (position + 1) {
++                    case 1:
++
++                        lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
++                        Log.d("TAG","選單1正常");
++                        break;
++                    case 2:
++
++                        lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
++                        Log.d("TAG","選單2正常");
++                        break;
++                    case 3:
++
++                        lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
++                        Log.d("TAG","選單3正常");
++                        break;
++                }
++            }
++            @Override
++            public void onNothingSelected(AdapterView<?> adapterView) {
++            }
++        });
++   }
++
++    //返回鍵
+     public void clickBack(View v){
+         Intent intent = new Intent();
+         intent.setClass(ZOO.this,MainActivity.class);
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision 95a56dd3ea062f1282e41e4b100e61370981f6de)
++++ build.gradle	(revision )
+@@ -8,7 +8,6 @@
+     }
+     dependencies {
+         classpath 'com.android.tools.build:gradle:3.0.0'
+-        
+ 
+         // NOTE: Do not place your application dependencies here; they belong
+         // in the individual module build.gradle files
+Index: app/src/main/java/me/xiaouc/be/ZOO/MyAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/me/xiaouc/be/ZOO/MyAdapter.java	(revision 95a56dd3ea062f1282e41e4b100e61370981f6de)
++++ app/src/main/java/me/xiaouc/be/ZOO/MyAdapter.java	(revision )
+@@ -57,26 +57,6 @@
+         tv5.setText("電話 : "+zooInfo[position].Phone);
+ 
+ 
+-
+-
+-//        TextView nametv = (TextView) v.findViewById(R.id.nametv);
+-//        nametv.setText(zooInfo[position].Name);
+-//        TextView agetv = (TextView) v.findViewById(R.id.agetv);
+-//        agetv.setText(zooInfo[position].Age);
+-//        TextView varietytv = (TextView) v.findViewById(R.id.varietytv2);
+-//        varietytv.setText(zooInfo[position].Variety);
+-//        TextView buildtv = (TextView) v.findViewById(R.id.buildtv);
+-//        buildtv.setText(zooInfo[position].Build);
+-//        TextView hairtypetv = (TextView) v.findViewById(R.id.hairtypetv);
+-//        hairtypetv.setText(zooInfo[position].HairType);
+-//        TextView typetv = (TextView) v.findViewById(R.id.typetv);
+-//        typetv.setText(zooInfo[position].Type);
+-//        TextView resettlementtv2 = (TextView) v.findViewById(R.id.resettlementtv2);
+-//        resettlementtv2.setText(zooInfo[position].Resettlement);
+-//        TextView phonetv = (TextView) v.findViewById(R.id.phonetv);
+-//        phonetv.setText(zooInfo[position].Phone);
+-//        EditText editText = (EditText) v.findViewById(R.id.editText);
+-//        editText.setText(zooInfo[position].Note);
+         return v;
+         }
+ }
+\ No newline at end of file
