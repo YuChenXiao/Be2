@@ -17,10 +17,5 @@
         <item>桃園機場捷運路線圖</item>
         <item>高雄捷運路線圖</item>
     </string-array>
-    <string-array name="zoo">
-        <item>狗狗</item>
-        <item>貓咪</item>
-        <item>其他</item>
-    </string-array>
     <string name="title_activity_maps">Map</string>
 </resources>

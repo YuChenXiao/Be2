@@ -43,6 +43,7 @@ public class ZOO extends AppCompatActivity {
         searchView=(SearchView)findViewById(R.id.searchView);
         tv = (TextView)findViewById(R.id.text1);
         tvv = (TextView)findViewById(R.id.text2);
+
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         searchView.setIconifiedByDefault(false);
         searchView.setFocusable(false);
@@ -73,12 +74,6 @@ public class ZOO extends AppCompatActivity {
                          z = gson.fromJson(response, Myzoo.class);
                         Log.d("TAG", "解析");
                         adapter = new MyAdapter(ZOO.this, z.result.results);
-                        //讀取中圖像文字
-                        progressBar.setVisibility(View.VISIBLE);
-                        tv.setVisibility(View.VISIBLE);
-                        tvv.setVisibility(View.VISIBLE);
-                        //
-
                         adapter.notifyDataSetChanged();
                         lv.setAdapter(adapter);
                         //隱藏讀取中圖像文字

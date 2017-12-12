@@ -29,6 +29,7 @@ class MyAdapter extends BaseAdapter implements Filterable {
     List<ZooInfo> zooInfo;
     ArrayList<ZooInfo> orgzooInfo;
     LayoutInflater inflater;
+    int k =0;
     public MyAdapter(Context context,List<ZooInfo> zooInfo){
         this.context = context;
         this.zooInfo = zooInfo;

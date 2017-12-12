@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_bus) {
 
         } else if (id == R.id.nav_settings) {
-
+//廣告區
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_zoo) {
